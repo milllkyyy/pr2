@@ -4,21 +4,52 @@
 		<p>Будет загадано число в определённом диапазоне. Необходимо отгадать это число.</p>
 		<hr>
 	</div>
-	<div>
+	<div id="preGameDiv">
 		<label>Минимальное число</label>
-		<input>
+		<input id="minNumber" type="number">
 		<label>Максимальное число</label>
-		<input>
-		<button>Загадать число</button>
+		<input id="maxNumber" type="number"> 
+		<button onclick="startGame();">Загадать число</button>
 	</div>
-	<div>
+	<div id="gameDiv" style="display: none;">
 		<label>Попыток потрачено: </label>
-		<label>0</label>
+		<label id="attempts">0</label>
 		<br>
 		<br>
 		<label>Введите число</label>
-		<input>
-		<button>ОК</button>
+		<input id="currentNumber" type="number">
+		<button onclick="guessNumber()">Предложить число</button>
 		<button>Сдаться</button>
 	</div>
+	<script>
+		var preGameDiv = document.getElementById('preGameDiv');
+		var gameDiv = document.getElementById('gameDiv');
+		var minNumberInput = document.getElementById('minNumber');
+		var maxNumberInput = document.getElementById('maxNumber');
+		var currentNumberInput = document.getElementById('currentNumber');
+		var attemptsLabel = document.getElementById('attempts');
+		var randomNumber = 0;
+		
+		function startGame() {
+			let minNumber = minNumberInput.value;
+			let maxNumber = maxNumberInput.value;
+			randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+			attemptsLabel.innerHTML = '0';
+			
+			gameDiv.style.display = 'block';
+			preGameDiv.style.display = 'none';
+		}
+		function guessNumber() {
+			let currentNumber = currentNumberInput.value;
+			if (currentNumber == randomNumber) {
+				alert('Поздравляем! Вы угадали число ' + randomNumber + ' за ' + (Number(attemptsLabel.innerHTML) + 1) + ' попыток!');
+				
+				gameDiv.style.display = 'none';
+				preGameDiv.style.display = 'block';
+			}
+			else {
+				attemptsLabel.innerHTML = Number(attemptsLabel.innerHTML) + 1;
+			}
+		}
+	</script>
 </body>
